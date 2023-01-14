@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class schedule extends Model
 {
-    protected $fillable =['date', 'time' ,'descrition', 'client_id', 'authClient_id', 'created_at', 'status'];
+    protected $fillable =['title','date', 'time' ,'descrition', 'client_id', 'authClient_id', 'created_at', 'status'];
     use HasFactory;
 }

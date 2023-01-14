@@ -12,14 +12,9 @@ class RegisterController extends Controller
     {
 
         $dados = [];
-         $userDate = $request->only('name', 'email',  'password', 'photo');
+         $userDate = $request->only('name', 'email',  'password');
 
           $userDate['password'] = bcrypt($userDate['password']);
-
-          $images = $request->file('photo');
-          if($images){
-            $userDate['photo'] = $result = $images->store('users','public');
-         }
 
           if(!$user = $user->create($userDate)){
             $dados = response()
@@ -33,7 +28,7 @@ class RegisterController extends Controller
              $dados = response()
              ->json([
                'data' => [
-                   'user' => $user
+                   'user' => 'sucess create'
                ]
              ]);
 
