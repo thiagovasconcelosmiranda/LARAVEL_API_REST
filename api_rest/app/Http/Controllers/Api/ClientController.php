@@ -31,32 +31,44 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
+       
+        $images = $request->file('file');
+        if($images){
+           $file = $images->store('users','public');
+        }
+        
+        $client = new Client();
+        $client->name = $request->name;
+        $client->cpf = $request->cpf;
+        $client->maritalStatus = $request->maritalStatus;
+        $client->cell = $request->cell;
+        $client->users_id = $request->users_id;
+        $client->file = $file;
+        $client->facebook = $request->facebook;
+        $client->linkedin = $request->linkedin;
+        $client->instagram = $request->instagram;
+        $client->twitter = $request->twitter;
+        
+        if($client->save()){
+         $response = response()
+             ->json([
+                'data' => [
+                    'sucess' => 'create sucess'
+                ]
+          ]);
 
-         $res ="";
-         $client = Client::where('cpf', $request->cpf)->get();
-         foreach($client as $res){}
-
-         if($res == ""){
-            $req = $this->client->create($request->all());
-            if($req){
-               $res = response()
-                 ->json([
-                  'data' => 'Create success'
-              ]);
-            }else{
-               $res = response()
-                 ->json([
-                  'error' => 'Not create'
-               ]);
-           }
         }else{
-            $res = response()
-                 ->json([
-                  'error' => 'Client already exists'
-               ]);
+            $response = response()
+             ->json([
+                'data' => [
+                    'error' => ' not create'
+                ]
+          ]);
+
         }
 
-        return $res;
+        
+        return $response;
 
     }
 
@@ -69,7 +81,6 @@ class ClientController extends Controller
     public function show( $id)
     {
         $clients = Client::where('users_id', $id)->get();
-
         foreach ($clients as $client) {
             $dados = $client;
         }

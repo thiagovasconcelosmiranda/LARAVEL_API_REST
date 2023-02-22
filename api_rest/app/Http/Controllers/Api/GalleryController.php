@@ -31,31 +31,39 @@ class GalleryController extends Controller
      */
     public function store(Request $request)
     {
-
-        $imgOne = $request;
-        /*
+        $response = [];
+       
+        $imgOne = $request->file('imgOne');
         $imgTwo = $request->file('imgTwo');
         $imgThree = $request->file('imgThree');
         $imgFour = $request->file('imgFour');
-
-
+       
         if($imgOne && $imgTwo && $imgThree && $imgFour){
-           $galleryOne = $imgOne->store('galleries','public');
-           $galleryTwo = $imgTwo->store('galleries','public');
-           $galleryThree = $imgThree->store('galleries','public');
-           $galleryFour = $imgFour->store('galleries','public');
-       }
+            $one = $imgOne->store('gallery', 'public');
+            $two =  $imgThree->store('gallery', 'public');
+            $three = $imgTwo->store('gallery', 'public');
+            $four = $imgFour->store('gallery', 'public');
 
-       $dataGallery =[
-        'imgOne'=> $galleryOne,
-        'imgTwo'=> $galleryTwo,
-        'imgThree'=>$galleryThree,
-        'imgFour'=>$galleryFour,
-        'client_id'=> $request->client_id
-    ];
-    */
-
-        return $request['imgOne'];
+            $gallery = new Gallery();
+            $gallery->imgOne = $one;
+            $gallery->imgTwo = $two;
+            $gallery->imgThree = $two;
+            $gallery->imgFour = $four;
+            $gallery->client_id = $request->client_id;
+         
+            if($gallery->save()){
+              $response = response()->json([
+                 'sucess' => 'create sucess'
+               ]);
+           }else{
+             $response = response()->json([
+                   'error' => 'create not' 
+               ]);
+          }
+        }   
+      
+     return $response;
+          
     }
 
     /**

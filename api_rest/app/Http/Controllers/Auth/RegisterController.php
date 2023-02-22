@@ -10,7 +10,6 @@ class RegisterController extends Controller
 {
     public function register(Request $request, User $user)
     {
-
         $dados = [];
          $userDate = $request->only('name', 'email',  'password');
 
