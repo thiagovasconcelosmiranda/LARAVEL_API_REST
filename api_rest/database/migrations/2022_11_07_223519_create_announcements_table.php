@@ -16,12 +16,10 @@ return new class extends Migration
         Schema::create('announcements', function (Blueprint $table) {
             $table->id();
             $table->string('title', 100);
-            $table->string('descrition');
+            $table->string('descrition', 300);
 
-            $table->unsignedBigInteger('client_id');
-
-            $table->foreign('client_id')->references('id')->on('clients');
-
+            $table->unsignedBigInteger('companies_id');
+            $table->foreign('companies_id')->references('id')->on('companies');
             $table->timestamps();
         });
     }

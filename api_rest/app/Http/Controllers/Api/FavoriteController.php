@@ -32,8 +32,8 @@ class FavoriteController extends Controller
      */
     public function store(Request $request)
     {
-         //
-         return $this->favorite->create($request->all());
+        $create = Favorite::create($request->all());
+         return $create;
     }
 
     /**
@@ -45,7 +45,9 @@ class FavoriteController extends Controller
     public function show($id)
     {
     
-        return Favorite::where('user_id', $id)->paginate();
+       return Favorite::where('user_id', $id)->paginate();
+       
+        
         
     }
 

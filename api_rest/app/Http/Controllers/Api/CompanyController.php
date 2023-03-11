@@ -31,32 +31,12 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
+       
+         
+            $req = Company::create($request->all());
+            
 
-         $res ="";
-         $company = Company::where('client_id', $request->client_id)->get();
-         foreach($company as $res){}
-
-         if($res == ""){
-            $req = $this->company->create($request->all());
-            if($req){
-               $res = response()
-                 ->json([
-                  'data' => 'Create success'
-              ]);
-            }else{
-               $res = response()
-                 ->json([
-                  'error' => 'Not create'
-               ]);
-           }
-        }else{
-            $res = response()
-                 ->json([
-                  'error' => 'Company already exists'
-               ]);
-        }
-
-        return $res;
+        return $req;
     }
 
     /**

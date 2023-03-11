@@ -31,30 +31,31 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-       
+      
         $images = $request->file('file');
         if($images){
            $file = $images->store('users','public');
+           $client = new Client();
+           $client->name = $request->name;
+           $client->cpf = $request->cpf;
+           $client->maritalStatus = $request->maritalStatus;
+           $client->cell = $request->cell;
+           $client->users_id = $request->users_id;
+           $client->file = $file;
+           $client->facebook = $request->facebook;
+           $client->linkedin = $request->linkedin;
+           $client->instagram = $request->instagram;
+           $client->twitter = $request->twitter;
+           $client->save();
+ 
         }
-        
-        $client = new Client();
-        $client->name = $request->name;
-        $client->cpf = $request->cpf;
-        $client->maritalStatus = $request->maritalStatus;
-        $client->cell = $request->cell;
-        $client->users_id = $request->users_id;
-        $client->file = $file;
-        $client->facebook = $request->facebook;
-        $client->linkedin = $request->linkedin;
-        $client->instagram = $request->instagram;
-        $client->twitter = $request->twitter;
-        
-        if($client->save()){
+
+          
+        if($client){
+
          $response = response()
              ->json([
-                'data' => [
-                    'sucess' => 'create sucess'
-                ]
+                'create sucess'
           ]);
 
         }else{
@@ -66,10 +67,7 @@ class ClientController extends Controller
           ]);
 
         }
-
-        
         return $response;
-
     }
 
     /**

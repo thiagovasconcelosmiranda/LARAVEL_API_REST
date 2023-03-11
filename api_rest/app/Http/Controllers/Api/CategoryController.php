@@ -42,7 +42,16 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        return category::where('id', $id)->get();
+        $category = Category::where('id', $id)->get();
+
+         foreach ($category as $item) {
+             $array = [
+                'id'=> $item->id,
+                'nameCat' => $item->nameCat,
+             ];
+          }
+
+          return $array;
     }
 
     /**

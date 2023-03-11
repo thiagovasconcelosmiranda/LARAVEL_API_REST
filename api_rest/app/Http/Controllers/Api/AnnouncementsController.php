@@ -26,37 +26,48 @@ class AnnouncementsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
 
-        $res ="";
-        $announcements = Announcements::where('client_id', $request->client_id)->get();
-        foreach($announcements as $res)
+       $image = $request->file('image');
 
-        if($res == ""){
-           $req = $this->announcements->create($request->all());
-           if($req){
-              $res = response()
-                ->json([
-                 'data' => 'Create success'
-             ]);
-           }else{
-              $res = response()
-                ->json([
-                 'error' => 'Not create'
-              ]);
+       if($image){
+          $file = $image->store('announcementsPhoto','public');
+          $announcements = new Announcements();
+          $announcements->title = $request->title;
+          $announcements->descrition = $request->descrition;
+          $announcements->company_id = $request->company_id;
+          $announcements->image = $file;
+          $announcements->save();
+          if($announcements->save()){
+             $response = response()
+             ->json([
+                'create sucess'
+            ]);
+          }else{
+             $response = response()
+             ->json([
+                'data' => [
+                    'error' => ' not create'
+                ]
+          ]);
           }
        }else{
-           $res = response()
-                ->json([
-                 'error' => 'Announcement already exists'
-              ]);
+         $response = response()
+             ->json([
+                'data' => [
+                    'error' => 'image not create'
+                ]
+          ]);
+        
        }
 
-       return $res;
+      
+       
+      return $response;
     }
 
     /**

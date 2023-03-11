@@ -37,32 +37,26 @@ class GalleryController extends Controller
         $imgTwo = $request->file('imgTwo');
         $imgThree = $request->file('imgThree');
         $imgFour = $request->file('imgFour');
-       
+      
         if($imgOne && $imgTwo && $imgThree && $imgFour){
             $one = $imgOne->store('gallery', 'public');
             $two =  $imgThree->store('gallery', 'public');
             $three = $imgTwo->store('gallery', 'public');
             $four = $imgFour->store('gallery', 'public');
 
+          
+        } 
+
             $gallery = new Gallery();
             $gallery->imgOne = $one;
             $gallery->imgTwo = $two;
             $gallery->imgThree = $two;
             $gallery->imgFour = $four;
-            $gallery->client_id = $request->client_id;
-         
-            if($gallery->save()){
-              $response = response()->json([
-                 'sucess' => 'create sucess'
-               ]);
-           }else{
-             $response = response()->json([
-                   'error' => 'create not' 
-               ]);
-          }
-        }   
+            $gallery->company_id = $request->company_id;
+            $gallery->save();
+        
       
-     return $response;
+     return $gallery;
           
     }
 
@@ -75,8 +69,7 @@ class GalleryController extends Controller
     public function show($id)
     {
 
-        $gallery = Gallery::where('Client_id', $id)->get();
-
+        $gallery = Gallery::where('company_id', $id)->get();
            $array = [
               'data' => $gallery
           ];
@@ -88,7 +81,7 @@ class GalleryController extends Controller
                 'imgTwo'=> $dados->imgTwo,
                 'imgThree' => $dados->imgThree,
                 'imgFour' => $dados->imgFour,
-                "client_id" => $dados->client_id
+                "company_id" => $dados->company_id
              ];
           }
 

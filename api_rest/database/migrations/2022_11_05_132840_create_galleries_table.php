@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('imgTwo',30);
             $table->string('imgThree',30);
             $table->string('imgFour',30);
-            $table->unsignedBigInteger('client_id');
-            $table->foreign('client_id')->references('id')->on('clients');
+            $table->unsignedBigInteger('announcement_id');
+            $table->foreign('announcement_id')->references('id')->on('announcements');
 
             $table->timestamps();
         });

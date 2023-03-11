@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Gallery extends Model
 {
-    protected $fillable =['imgOne', 'imgTwo', 'imgThree', 'imgFour', 'client_id'];
+    protected $fillable =['imgOne', 'imgTwo', 'imgThree', 'imgFour', 'company_id'];
     use HasFactory;
 
 }

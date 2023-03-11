@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Announcements extends Model
 {
-    protected $fillable =['title', 'descrition', 'client_id', 'gallery_id', 'state', 'photo'];
+    protected $fillable =['title', 'descrition', 'company_id', 'image'];
     use HasFactory;
 }
